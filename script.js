@@ -128,10 +128,19 @@ function fillU(){
 }
 
 function saveGrid(){
-    let grid = document.getElementById("grid");
+    let input = document.getElementById("grid-name");
+    let name = input.value;
+    console.log(name);
+    //let grid = document.getElementById("grid");
     let save = grid.cloneNode(true);
 
+    let post = document.createElement("div");
+    let title = document.createElement("p");
+    title.innerHTML = name;
+    post.appendChild(title);
+    post.appendChild(save);
+
     let savedGrids = document.getElementById("saved-grids");
-    savedGrids.appendChild(save);
+    savedGrids.appendChild(post);
     //console.log("whaaaa")
 }
