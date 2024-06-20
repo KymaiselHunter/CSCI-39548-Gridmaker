@@ -1,9 +1,14 @@
 let colorSelected; 
 
+//made grid global, since we should 
+//only be accessing the one grid
+//we want to draw on
+let grid = document.getElementById("grid")
+
 //Adds a row
 function addR() {
-    let grid = document.getElementById("grid");
-    let rows = document.getElementsByTagName("tr");
+    //let grid = document.getElementById("grid");
+    let rows = grid.getElementsByTagName("tr");
 
     //if grid is empty need to create row
     if (rows.length === 0) {
@@ -32,8 +37,8 @@ function addR() {
 }
 //Adds a column
 function addC() {
-    let grid = document.getElementById("grid");
-    let rows = document.getElementsByTagName("tr");
+    //let grid = document.getElementById("grid");
+    let rows = grid.getElementsByTagName("tr");
     
     if (rows.length === 0) {
         let row = document.createElement("tr");
@@ -57,8 +62,8 @@ function addC() {
 
 //Removes a row
 function removeR() {
-    let grid = document.getElementById("grid");
-    let rows = document.getElementsByTagName("tr");
+    //let grid = document.getElementById("grid");
+    let rows = grid.getElementsByTagName("tr");
     if(rows.length === 0){
         alert("There is nothing to delete");
         return;
@@ -70,8 +75,8 @@ function removeR() {
 }
 //Remove a column
 function removeC() {
-    let rows = document.getElementsByTagName("tr");
-    let grid = document.getElementById("grid");
+    let rows = grid.getElementsByTagName("tr");
+    //let grid = document.getElementById("grid");
 
     if(rows.length === 0){
         alert("There is nothing to delete");
@@ -95,7 +100,9 @@ function selected(){
 }
 
 function fill(){
-    let cells = document.getElementsByTagName("td");
+    let cells = grid.getElementsByTagName("td");
+
+    //console.log(cells);
 
     for (let i = 0; i < cells.length; i++){
         cells[i].style.backgroundColor = colorSelected;
@@ -103,7 +110,7 @@ function fill(){
 }
 
 function clearAll(){
-    let cells = document.getElementsByTagName("td");
+    let cells = grid.getElementsByTagName("td");
 
     for (let i = 0; i < cells.length; i++){
         cells[i].style.backgroundColor = "";
@@ -111,11 +118,20 @@ function clearAll(){
 }
 
 function fillU(){
-    let cells = document.getElementsByTagName("td");
+    let cells = grid.getElementsByTagName("td");
 
     for (let i = 0; i < cells.length; i++){
         if (cells[i].style.backgroundColor === "") {
             cells[i].style.backgroundColor = colorSelected;
         }
     }
+}
+
+function saveGrid(){
+    let grid = document.getElementById("grid");
+    let save = grid.cloneNode(true);
+
+    let savedGrids = document.getElementById("saved-grids");
+    savedGrids.appendChild(save);
+    //console.log("whaaaa")
 }
