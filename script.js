@@ -142,7 +142,7 @@ function saveGrid(){
     let save = grid.cloneNode(true);
 
     let post = document.createElement("div");
-    post.classList.add("grid-container")
+    post.classList.add("canvas")
     let title = document.createElement("p");
     title.innerHTML = name;
     post.appendChild(title);
