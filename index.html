@@ -19,11 +19,23 @@
         <option value="Green">Green</option>
         <option value="Yellow">Yellow</option>
     </select>
-    <table id="grid">
-    </table>
-    
-    <button onclick="saveGrid()">clone/save</button>
 
+    <button onclick="zoomIn()">(+)</button>
+    <button onclick="zoomOut()">(-)</button>
+
+    <div class="grid-container">
+        <table class="grid" id="curr-grid">
+        </table>
+    </div>
+    
+    
+    <div id="save-panel">
+        <input id="grid-name"></input>
+        <button onclick="saveGrid()">clone/save</button>
+    </div>
+    
+    
+    
     <div id="saved-grids"></div>
     
     <script src="script.js"></script>

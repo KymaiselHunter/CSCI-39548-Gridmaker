@@ -3,7 +3,7 @@ let colorSelected;
 //made grid global, since we should 
 //only be accessing the one grid
 //we want to draw on
-let grid = document.getElementById("grid")
+let grid = document.getElementById("curr-grid")
 
 //Adds a row
 function addR() {
@@ -30,6 +30,10 @@ function addR() {
             col.onclick = function(){
               this.style.backgroundColor = colorSelected;
             };
+
+            console.log(grid.getElementsByTagName("td")[0].clientWidth);
+            resizeCell(col);
+
             row.appendChild(col);
         }
         grid.appendChild(row);
@@ -55,6 +59,9 @@ function addC() {
             col.onclick = function(){
               this.style.backgroundColor = colorSelected;
             };
+
+            resizeCell(col)
+
             rows[i].appendChild(col);
         }
     } 
@@ -128,10 +135,76 @@ function fillU(){
 }
 
 function saveGrid(){
-    let grid = document.getElementById("grid");
+    let input = document.getElementById("grid-name");
+    let name = input.value;
+    console.log(name);
+    //let grid = document.getElementById("grid");
     let save = grid.cloneNode(true);
 
+    let post = document.createElement("div");
+    post.classList.add("grid-container")
+    let title = document.createElement("p");
+    title.innerHTML = name;
+    post.appendChild(title);
+    post.appendChild(save);
+
     let savedGrids = document.getElementById("saved-grids");
-    savedGrids.appendChild(save);
+    savedGrids.appendChild(post);
     //console.log("whaaaa")
+}
+
+//helper function to apply a new dimension to a cell
+//only call if not empty grid
+function resizeCell(pCell, pDimensionString = grid.getElementsByTagName("td")[0].clientWidth .toString() + 'px')
+{
+    pCell.style.width = pDimensionString;
+    pCell.style.height = pDimensionString;
+    pCell.style.minHeight = pDimensionString;
+    pCell.style.minWidth = pDimensionString;
+}
+
+function zoomIn()
+{
+    const cells = grid.getElementsByTagName("td");
+
+    if (cells.length <= 0) return;
+    //console.log(cells);
+    const currDimension = cells[0].clientWidth;
+    let newDimension;
+
+    if (currDimension >= 70) return;
+    else if (currDimension > 50) newDimension = currDimension + 10;
+    else if (currDimension > 20) newDimension = currDimension + 5;
+    else newDimension = currDimension + 1;
+    
+    console.log(newDimension);
+
+    const newDimensionString = newDimension.toString() + 'px';
+    for(let i = 0; i < cells.length; i++)
+    {
+        resizeCell(cells[i], newDimensionString)
+    }
+}
+
+function zoomOut()
+{
+    const cells = grid.getElementsByTagName("td");
+
+    if (cells.length <= 0) return;
+    //console.log(cells);
+    const currDimension = cells[0].clientWidth;
+    let newDimension;
+
+    if (currDimension <= 1) return;
+    else if (currDimension < 20) newDimension = currDimension - 1;
+    else if (currDimension < 50) newDimension = currDimension - 5;
+    else newDimension = currDimension - 10;
+    
+    console.log(newDimension);
+
+    const newDimensionString = newDimension.toString() + 'px';
+    for(let i = 0; i < cells.length; i++)
+    {
+        resizeCell(cells[i], newDimensionString)
+    }
 }
