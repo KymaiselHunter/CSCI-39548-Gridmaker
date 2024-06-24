@@ -135,17 +135,28 @@ function fillU(){
 }
 
 function saveGrid(){
-    let input = document.getElementById("grid-name");
-    let name = input.value;
-    console.log(name);
-    //let grid = document.getElementById("grid");
-    let save = grid.cloneNode(true);
+    //get the copied canvas
+    console.log(document.getElementById("curr-canvas"));
+    let save = document.getElementById("curr-canvas").cloneNode(true);
+    
 
-    let post = document.createElement("div");
-    post.classList.add("grid-container")
+    //make the title element
+    let input = document.getElementById("piece-name");
+    let name = input.value;
+    let titlePanel = document.createElement("div");
+
     let title = document.createElement("p");
     title.innerHTML = name;
-    post.appendChild(title);
+
+    titlePanel.append(title);
+    //console.log(name);
+    //let grid = document.getElementById("grid");
+    
+
+    let post = document.createElement("div");
+    post.classList.add("canvas-container");
+    
+    post.appendChild(titlePanel);
     post.appendChild(save);
 
     let savedGrids = document.getElementById("saved-grids");
