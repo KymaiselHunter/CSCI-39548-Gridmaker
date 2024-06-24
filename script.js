@@ -5,6 +5,8 @@ let colorSelected;
 //we want to draw on
 let grid = document.getElementById("curr-grid")
 
+let saves = 0;
+
 //Adds a row
 function addR() {
     //let grid = document.getElementById("grid");
@@ -136,8 +138,14 @@ function fillU(){
 
 function saveGrid(){
     //get the copied canvas
-    console.log(document.getElementById("curr-canvas"));
+    //console.log(document.getElementById("curr-canvas"));
     let save = document.getElementById("curr-canvas").cloneNode(true);
+    
+    //set the id of the grid
+    save.id = "cloneCanvas-" + saves.toString();
+    save.lastElementChild.id = "cloneGrid-" +saves.toString();
+    console.log(save);
+    console.log(save.lastElementChild);
     
 
     //make the title element
@@ -149,6 +157,23 @@ function saveGrid(){
     title.innerHTML = name;
 
     titlePanel.append(title);
+    console.log(save.lastElementChild);
+    //make the zoom element
+    let zoomInButton = document.createElement("button");
+    zoomInButton.textContent = "+";
+    let zoomOutButton = document.createElement("button");
+    zoomOutButton.textContent = "-";
+
+    zoomInButton.onclick = function(){zoomIn(save.lastElementChild)};
+    zoomOutButton.onclick = function(){zoomOut(save.lastElementChild)};
+
+    //zoom panel creation
+    let zoomPanel = document.createElement("div");
+    zoomPanel.classList.add("zoom");
+
+    zoomPanel.append(zoomInButton);
+    zoomPanel.append(zoomOutButton);
+
     //console.log(name);
     //let grid = document.getElementById("grid");
     
@@ -157,11 +182,13 @@ function saveGrid(){
     post.classList.add("canvas-container");
     
     post.appendChild(titlePanel);
+    post.appendChild(zoomPanel);
     post.appendChild(save);
 
     let savedGrids = document.getElementById("saved-grids");
     savedGrids.appendChild(post);
     //console.log("whaaaa")
+    saves++;
 }
 
 //helper function to apply a new dimension to a cell
@@ -174,9 +201,10 @@ function resizeCell(pCell, pDimensionString = grid.getElementsByTagName("td")[0]
     pCell.style.minWidth = pDimensionString;
 }
 
-function zoomIn()
+function zoomIn(pGrid = grid)
 {
-    const cells = grid.getElementsByTagName("td");
+    console.log(pGrid);
+    const cells = pGrid.getElementsByTagName("td");
 
     if (cells.length <= 0) return;
     //console.log(cells);
@@ -197,9 +225,9 @@ function zoomIn()
     }
 }
 
-function zoomOut()
+function zoomOut(pGrid)
 {
-    const cells = grid.getElementsByTagName("td");
+    const cells = pGrid.getElementsByTagName("td");
 
     if (cells.length <= 0) return;
     //console.log(cells);
