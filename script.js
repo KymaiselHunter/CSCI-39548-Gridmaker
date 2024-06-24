@@ -225,7 +225,7 @@ function zoomIn(pGrid = grid)
     }
 }
 
-function zoomOut(pGrid)
+function zoomOut(pGrid = grid)
 {
     const cells = pGrid.getElementsByTagName("td");
 
