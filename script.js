@@ -157,12 +157,14 @@ function saveGrid(){
     title.innerHTML = name;
 
     titlePanel.append(title);
+    titlePanel.classList.add("title")
     console.log(save.lastElementChild);
+
     //make the zoom element
     let zoomInButton = document.createElement("button");
-    zoomInButton.textContent = "+";
+    zoomInButton.textContent = "(+)";
     let zoomOutButton = document.createElement("button");
-    zoomOutButton.textContent = "-";
+    zoomOutButton.textContent = "(-)";
 
     zoomInButton.onclick = function(){zoomIn(save.lastElementChild)};
     zoomOutButton.onclick = function(){zoomOut(save.lastElementChild)};
@@ -176,13 +178,19 @@ function saveGrid(){
 
     //console.log(name);
     //let grid = document.getElementById("grid");
-    
+    //make post panel
+    let postPanel = document.createElement("div");
+    postPanel.classList.add("canvas-panel");
+    postPanel.appendChild(titlePanel);
+    postPanel.appendChild(zoomPanel);
 
+    
+    
+    //make post
     let post = document.createElement("div");
     post.classList.add("canvas-container");
     
-    post.appendChild(titlePanel);
-    post.appendChild(zoomPanel);
+    post.appendChild(postPanel);
     post.appendChild(save);
 
     let savedGrids = document.getElementById("saved-grids");
@@ -211,7 +219,11 @@ function zoomIn(pGrid = grid)
     const currDimension = cells[0].clientWidth;
     let newDimension;
 
-    if (currDimension >= 70) return;
+    if (currDimension >= 200) 
+    {
+        alert("You cannot zoom in anymore");
+        return;
+    }
     else if (currDimension > 50) newDimension = currDimension + 10;
     else if (currDimension > 20) newDimension = currDimension + 5;
     else newDimension = currDimension + 1;
@@ -234,7 +246,11 @@ function zoomOut(pGrid = grid)
     const currDimension = cells[0].clientWidth;
     let newDimension;
 
-    if (currDimension <= 1) return;
+    if (currDimension <= 1)
+    {
+        alert("You cannot zoom in anymore");
+        return;
+    }
     else if (currDimension < 20) newDimension = currDimension - 1;
     else if (currDimension < 50) newDimension = currDimension - 5;
     else newDimension = currDimension - 10;
